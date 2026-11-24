@@ -34,7 +34,7 @@ function matchPostId(value?: string | null) {
         /^post_([a-z0-9]+)$/i,
         /^rhsPost_([a-z0-9]+)$/i,
         /^postView_([a-z0-9]+)$/i,
-        /^post-message-([a-z0-9]+)$/i,
+        /^post-message-([a-z0-9]{26})$/i,
         /^([a-z0-9]{26})$/i,
     ];
 

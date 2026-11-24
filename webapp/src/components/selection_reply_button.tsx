@@ -20,6 +20,7 @@ type OverlayState = {
 };
 
 const MESSAGE_BODY_SELECTORS = [
+    '[data-testid="post-message-text"]',
     '[data-testid^="postMessageText"]',
     '.post-message__text',
     '.post-message__content',
@@ -64,7 +65,7 @@ function getSelectionContext(range: Range) {
     };
 }
 
-function readSelectionOverlay(): OverlayState | null {
+export function readSelectionOverlay(): OverlayState | null {
     if (!getPluginConfig().enableSelectionPopup) {
         return null;
     }
