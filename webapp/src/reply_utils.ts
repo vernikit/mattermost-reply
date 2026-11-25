@@ -31,11 +31,13 @@ function matchPostId(value?: string | null) {
     }
 
     const patterns = [
-        /^post_([a-z0-9]+)$/i,
-        /^rhsPost_([a-z0-9]+)$/i,
-        /^postView_([a-z0-9]+)$/i,
-        /^post-message-([a-z0-9]{26})$/i,
-        /^([a-z0-9]{26})$/i,
+        /^post_([a-z0-9]{26})$/,
+        /^rhsPost_([a-z0-9]{26})$/,
+        /^postView_([a-z0-9]{26})$/,
+        /^postMessageText_([a-z0-9]{26})$/,
+        /^([a-z0-9]{26})_message$/,
+        /^post-message-([a-z0-9]{26})$/,
+        /^([a-z0-9]{26})$/,
     ];
 
     for (const pattern of patterns) {
@@ -43,13 +45,9 @@ function matchPostId(value?: string | null) {
         if (match?.[1]) {
             return match[1];
         }
-        if (match?.[0] && match[0].length === 26) {
-            return match[0];
-        }
     }
 
-    const embedded = value.match(/([a-z0-9]{26})/i);
-    return embedded?.[1] || null;
+    return null;
 }
 
 function trimText(value: string) {
@@ -125,12 +123,12 @@ export function extractPostIdFromElement(target: EventTarget | null) {
 
     let element = target instanceof Element ? target : target.parentElement;
     while (element) {
-        const postId = matchPostId(
-            element.getAttribute('data-postid') ||
-            element.getAttribute('data-post-id') ||
-            element.getAttribute('data-testid') ||
+        const postId = [
+            element.getAttribute('data-postid'),
+            element.getAttribute('data-post-id'),
             element.id,
-        );
+            element.getAttribute('data-testid'),
+        ].map(matchPostId).find(Boolean);
 
         if (postId) {
             return postId;

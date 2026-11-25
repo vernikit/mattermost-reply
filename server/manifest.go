@@ -20,7 +20,7 @@ const manifestStr = `
   "support_url": "https://github.com/zilosoft/mattermost-reply/issues",
   "release_notes_url": "https://github.com/ZILosoft/mattermost-reply/releases",
   "icon_path": "assets/starter-template-icon.svg",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "min_server_version": "6.2.1",
   "server": {
     "executables": {

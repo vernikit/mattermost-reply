@@ -4,13 +4,13 @@ import {readSelectionOverlay} from 'components/selection_reply_button';
 
 test('shows Quote for selected message text in the current Mattermost markup', () => {
     const postId = 'abcdefghijklmnopqrstuvwxyz';
-    const post = document.createElement('div');
-    post.id = `post_${postId}`;
-    post.innerHTML = '<div data-testid="post-message-text">Selected message</div>';
-    document.body.appendChild(post);
+    const postList = document.createElement('div');
+    postList.id = 'virtualizedPostListContent';
+    postList.innerHTML = `<div id="post_${postId}" data-testid="postView"><div id="postMessageText_${postId}" data-testid="post-message-text">Selected message</div></div>`;
+    document.body.appendChild(postList);
 
     const range = document.createRange();
-    range.selectNodeContents(post.firstElementChild!);
+    range.selectNodeContents(postList.querySelector('[data-testid="post-message-text"]')!);
     range.getBoundingClientRect = () => ({
         bottom: 30,
         height: 20,
@@ -26,5 +26,5 @@ test('shows Quote for selected message text in the current Mattermost markup', (
     }));
 
     window.getSelection()!.removeAllRanges();
-    post.remove();
+    postList.remove();
 });
